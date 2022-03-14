@@ -90,13 +90,15 @@ OrderModel.init(
 
 OrderModel.belongsTo(UserModel, {
     foreignKey: "user_id",
+    onDelete: "cascade",
 });
 OrderModel.belongsTo(FoodModel, {
     foreignKey: "food_id",
+    onDelete: "cascade",
 });
 
 !(async function () {
-    sequelize.sync();
+    sequelize.sync({ force: true });
 })();
 
 export { UserModel, FoodModel, OrderModel, Op, sequelize };

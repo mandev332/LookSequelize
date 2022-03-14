@@ -34,4 +34,21 @@ const GET = async (req, res) => {
     }
 };
 
-export default { POST, GET };
+const DELETE = async (req, res) => {
+    try {
+        let { user_id } = req.body;
+        let user = await UserModel.destroy({ where: { user_id } });
+        await res.json({
+            status: 200,
+            massage: "Deleted user",
+            data: user,
+        });
+    } catch (error) {
+        res.json({
+            status: 400,
+            massage: error.massage,
+        });
+    }
+};
+
+export default { POST, GET, DELETE };

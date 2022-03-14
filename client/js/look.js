@@ -9,6 +9,7 @@ const telephoneInput = document.querySelector("#telephoneInput");
 const foodsForm = document.querySelector("#foodsForm");
 const foodsCount = document.querySelector("#foodsCount");
 const hostName = "https://look-sequelize.herokuapp.com";
+// const hostName = "http://localhost:5000";
 
 function createElements(...array) {
     return array.map((el) => {
@@ -19,21 +20,42 @@ function createElements(...array) {
 async function renderUsers() {
     const response = await fetch(hostName + "/users");
     const users = await response.json();
-    console.log(users);
     customersList.innerHTML = null;
     for (let user of users) {
-        const [li, span, a] = createElements("li", "span", "a");
+        const [li, span, a, btn, i] = createElements(
+            "li",
+            "span",
+            "a",
+            "button",
+            "i"
+        );
 
         li.className = "customer-item";
         span.className = "customer-name";
         a.className = "customer-phone";
+        btn.className = "user-btn";
+        i.innerHTML = `<i class='bx bxs-message-square-x'></i>`;
 
         span.textContent = user.username;
         a.textContent = "+" + user.contact;
 
         a.setAttribute("href", "tel:+" + user.contact);
-
-        li.append(span, a);
+        btn.onclick = async (event) => {
+            event.preventDefault();
+            const deleteuser = await fetch(hostName + "/users", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "Application/json",
+                },
+                body: JSON.stringify({
+                    user_id: user.user_id,
+                }),
+            });
+            ordersList.innerHTML = null;
+            li.remove();
+        };
+        btn.append(i);
+        li.append(span, a, btn);
         customersList.append(li);
 
         li.onclick = () => {
@@ -51,24 +73,41 @@ async function renderOrders(userId) {
     ordersList.innerHTML = null;
 
     for (let order of orders) {
-        const [li, img, div, foodName, foodCount] = createElements(
+        const [li, img, div, foodName, foodCount, btn, i] = createElements(
             "li",
             "img",
             "div",
             "span",
-            "span"
+            "span",
+            "button",
+            "i"
         );
-
         li.className = "order-item";
         foodName.className = "order-name";
         foodCount.className = "order-count";
+        btn.className = "order-btn";
+        i.innerHTML = `<i class='bx  bx-trash'></i>`;
 
         img.src = hostName + order.FoodModel.food_img;
 
         foodName.textContent = order.FoodModel.food_name;
         foodCount.textContent = order.count;
+        btn.onclick = async (event) => {
+            event.preventDefault();
+            const deleteorder = await fetch(hostName + "/orders", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "Application/json",
+                },
+                body: JSON.stringify({
+                    order_id: order.order_id,
+                }),
+            });
+            li.remove();
+        };
 
-        div.append(foodName, foodCount);
+        btn.append(i);
+        div.append(foodName, foodCount, btn);
         li.append(img, div);
         ordersList.append(li);
     }

@@ -52,6 +52,8 @@ async function renderUsers() {
                 }),
             });
             ordersList.innerHTML = null;
+            clientId.textContent = null
+            userHeader.textContent = null
             li.remove();
         };
         btn.append(i);

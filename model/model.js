@@ -98,7 +98,7 @@ OrderModel.belongsTo(FoodModel, {
 });
 
 !(async function () {
-    sequelize.sync({ force: true });
+    sequelize.sync();
 })();
 
 export { UserModel, FoodModel, OrderModel, Op, sequelize };

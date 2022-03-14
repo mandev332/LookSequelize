@@ -53,7 +53,7 @@ async function renderUsers() {
             });
             ordersList.innerHTML = null;
             clientId.textContent = null
-            userHeader.textContent = null
+            userHeader.textContent = "select user..."
             li.remove();
         };
         btn.append(i);

@@ -8,7 +8,7 @@ const usernameInput = document.querySelector("#usernameInput");
 const telephoneInput = document.querySelector("#telephoneInput");
 const foodsForm = document.querySelector("#foodsForm");
 const foodsCount = document.querySelector("#foodsCount");
-const hostName = "http://localhost:5000";
+const hostName = "https://look-sequelize.herokuapp.com";
 
 function createElements(...array) {
     return array.map((el) => {
@@ -19,7 +19,7 @@ function createElements(...array) {
 async function renderUsers() {
     const response = await fetch(hostName + "/users");
     const users = await response.json();
-
+    console.log(users);
     customersList.innerHTML = null;
     for (let user of users) {
         const [li, span, a] = createElements("li", "span", "a");

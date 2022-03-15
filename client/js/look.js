@@ -52,8 +52,13 @@ async function renderUsers() {
                 }),
             });
             ordersList.innerHTML = null;
+<<<<<<< HEAD
             clientId.textContent = null;
             userHeader.textContent = "select user...";
+=======
+            clientId.textContent = null
+            userHeader.textContent = "select user..."
+>>>>>>> 445c1d10214f4fac977804fd8ad3dacdc72908e9
             li.remove();
         };
         btn.append(i);
